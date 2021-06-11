@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    openshift.io/description: .Net Core basic pipline example.
+    openshift.io/display-name: DotNet Basic Pipeline
+  name: dotnet-basic-pipeline
