@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: quarkus-native-basic-pipeline
+
+# Include Quarkus native build task.
+bases:
+  - ../../tasks/quarkus
+
+# Workspace PVC, Pipeline, and Pipeline Run
+resources:
+  - namespace.yaml
+  - workspace-pvc.yaml
+  - basic-pipeline.yaml
