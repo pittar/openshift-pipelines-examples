@@ -1,0 +1,33 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: download-model-hf
+  namespace: openshift-pipelines
+spec:
+  params:
+    - description: Huggingface token.
+      name: HF_TOKEN
+      type: string
+    - description: Model to download.
+      name: MODEL
+      type: string
+  steps:
+    - args:
+        - |-
+          pip install -U "huggingface_hub[cli]"
+
+          echo Downloading Model
+
+          huggingface-cli login --token $(params.HF_TOKEN)
+          huggingface-cli download $(params.MODEL) --local-dir=$(workspaces.model.path)
+
+          echo -----------------------------------
+      command:
+        - /bin/bash
+        - '-c'
+      computeResources: {}
+      image: 'registry.redhat.io/ubi9/python-312:9.6'
+      name: download
+      workingDir: /workspace/model
+  workspaces:
+    - name: model
